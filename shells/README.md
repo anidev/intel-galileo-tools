@@ -6,7 +6,7 @@ So far I wrote three shells, in the following order. The most advanced is shell3
 
 It may be possible to use these on other Arduino boards. Start with shell3 (which requires a POSIX-compliant OS) and work backwards until you find one that works best.
 
-- shell: Very basic terminal emulation. Newline must be sent after each command. Commands are executed using system() and their output is piped to the serial console. Backspace is supported. Delete, arrow keys, and other advanced functions like Ctrl+C are not supported, so be careful about running commands that don't exit immediately.
+- shell: Very basic terminal emulation. Newline must be sent after each command. Commands are executed using popen() (basically same as system() with stdout pipe) and their output is piped to the serial console. Backspace is supported. Delete, arrow keys, and other advanced functions like Ctrl+C are not supported, so be careful about running commands that don't exit immediately.
 
 - shell2: Runs sh in a child process that will automatically exit when the sketch is reset. All input to sh is piped in from the serial console, stdout and stderr are piped to the serial console. In order to make it as advanced as possible, a few attributes of the serial device are changed (refer to the stty command in spawnShell). Specifically, if the icanon attribute is enabled (to get native support for backspace/delete characters), uploads will fail.
 
