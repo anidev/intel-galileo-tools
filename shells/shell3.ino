@@ -61,7 +61,7 @@ void serialSend() {
 void setup() {
   Serial.begin(9600);
   Serial.println("");
-  Serial.println("Enter commands, 1024 character limit, newline after command");
+  Serial.println("Welcome to Galileo");
   spawnShell();
 }
 
