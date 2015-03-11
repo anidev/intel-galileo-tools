@@ -4,7 +4,9 @@
 #include <fcntl.h>
 #include <signal.h>
 #include <errno.h>
+#include <termios.h>
 #include <sys/prctl.h>
+#include <sys/ioctl.h>
 
 int pty;
 pid_t childPid = 0;
@@ -19,9 +21,14 @@ void spawnShell() {
     prctl(PR_SET_PDEATHSIG, SIGHUP);
     int ptySlave = open(ptsname(pty), O_RDWR);
     close(pty);
+    setsid();
+    
     dup2(ptySlave, STDIN_FILENO);
     dup2(ptySlave, STDOUT_FILENO);
     dup2(ptySlave, STDERR_FILENO);
+    close(ptySlave);
+    ioctl(STDIN_FILENO, TIOCSCTTY, 1);
+    
     char* sh;
     if(access("/bin/bash", F_OK) != -1) {
       sh = "bash";
